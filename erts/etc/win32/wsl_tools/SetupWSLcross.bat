@@ -4,10 +4,16 @@ rem Usage: eval `cmd.exe /c SetupWSLcross.bat x64`
 
 IF "%~1"=="x86" GOTO search
 IF "%~1"=="x64" GOTO search
+IF "%~1"=="arm64" GOTO search
 
 GOTO badarg
 
 :search
+IF EXIST "C:\Program Files\Microsoft Visual Studio\2022\Preview\VC\Auxiliary\Build\vcvarsall.bat". (
+   call "C:\Program Files\Microsoft Visual Studio\2022\Preview\VC\Auxiliary\Build\vcvarsall.bat" %~1 > nul
+   goto continue
+)
+
 IF EXIST "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvarsall.bat". (
    call "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" %~1 > nul
    goto continue
