@@ -75,6 +75,7 @@ REDIRECT_HTML_FILES = \
 	$(REDIRECT_HTML_DIR)/INSTALL.html \
 	$(REDIRECT_HTML_DIR)/INSTALL-CROSS.html \
 	$(REDIRECT_HTML_DIR)/INSTALL-WIN32.html \
+	$(REDIRECT_HTML_DIR)/INSTALL-WIN32-ARM64.html \
 	$(REDIRECT_HTML_DIR)/OTP-PATCH-APPLY.html
 
 # ----------------------------------------------------

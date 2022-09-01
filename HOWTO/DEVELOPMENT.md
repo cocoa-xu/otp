@@ -76,7 +76,7 @@ and install any dependencies that you do not have. See
 [Required Utilities](INSTALL.md#required-utilities) and
 [Optional Utilities](INSTALL.md#optional-utilities) in [INSTALL.md](INSTALL.md)
 for a list of utilities to install. (Windows has its own [INSTALL Guide](INSTALL-WIN32.md)
-with its own [Required Utilities](INSTALL-WIN32.md#tools-you-need-and-their-environment)).
+with its own [Required Utilities](INSTALL-WIN32.md#tools-you-need-and-their-environment); for ARM64 Windows, [INSTALL Guide (ARM64)](INSTALL-WIN32-ARM64.md) and [Required Utilities (ARM64)](INSTALL-WIN32-ARM64.md#tools-you-need-and-their-environment)).
 
 Then you need to set `ERL_TOP` to point at the repository you are developing in.
 Not all make commands needs this environment variable set, but many do so it is

@@ -767,6 +767,7 @@ Operating system
 
    [$ERL_TOP/HOWTO/INSTALL-CROSS.md]: INSTALL-CROSS.md
    [$ERL_TOP/HOWTO/INSTALL-WIN32.md]: INSTALL-WIN32.md
+   [$ERL_TOP/HOWTO/INSTALL-WIN32-ARM64.md]: INSTALL-WIN32-ARM64.md
    [DESTDIR]: http://www.gnu.org/prep/standards/html_node/DESTDIR.html
    [Building in Git]: #Advanced-configuration-and-build-of-ErlangOTP_Building_Within-Git
    [Advanced Configure]: #Advanced-configuration-and-build-of-ErlangOTP_Configuring
