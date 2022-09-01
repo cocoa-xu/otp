@@ -88,9 +88,11 @@ NSIS install system, OpenSSL and wxWidgets. Well, here's some information about
 the different tools:
 
 *   WSL2: Install WSL2 and Ubuntu in Windows 11
-    <https://docs.microsoft.com/en-us/windows/wsl/install>
 
-    We have used and tested with WSL-2.
+        $ Invoke-WebRequest -Uri "https://github.com/microsoft/WSL/releases/download/0.66.2/Microsoft.WSL_0.66.2.0_x64_ARM64.msixbundle" -OutFile "Microsoft.WSL_0.66.2.0_x64_ARM64.msixbundle"
+        $ Add-AppxPackage "Microsoft.WSL_0.66.2.0_x64_ARM64.msixbundle"
+
+    We have used and tested with WSL2 version 0.66.2.
 
 *   Visual Studio 2022 with native ARM64 support
     Download and run the installer from:
@@ -386,7 +388,7 @@ Frequently Asked Questions
 
 *   Q: Which version of WSL and other tools do you use then?
 
-    A:  We use WSL 2 with Ubuntu 20.04.
+    A:  We use WSL2 0.66.2 with Ubuntu 20.04.
     The llvm-mingw we used for %OTP-REL% was version 14.0.0.
     We used Visual studio 2022.
 
