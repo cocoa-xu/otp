@@ -54,32 +54,28 @@ This is the short story though, for the experienced and impatient:
 
     *   Install Visual Studio 2022
 
-    *   Get and install windows NSIS 3.05 or later (3.05 tried and working)
-
     *   Get the Erlang source distribution (from
         <http://www.erlang.org/download.html>) and unpack with `tar`
         to the windows disk for example to: /mnt/c/src/
 
     *   Install llvm-mingw (from <https://github.com/mstorsjo/llvm-mingw/releases>), 
-        automake and  make: `sudo apt update && sudo apt install automake make`
+        automake and make: `sudo apt update && sudo apt install automake make`
+
+            $ wget https://github.com/mstorsjo/llvm-mingw/releases/download/20220323/llvm-mingw-20220323-ucrt-ubuntu-18.04-aarch64.tar.xz -O llvm-mingw-20220323-ucrt-ubuntu-18.04-aarch64.tar.xz
+            $ tar -xf llvm-mingw-20220323-ucrt-ubuntu-18.04-aarch64.tar.xz
+            $ export PATH="$(pwd)/llvm-mingw-20220323-ucrt-ubuntu-18.04-aarch64/bin"
 
     *   `$ cd UNPACK_DIR`
 
     *   Modify PATH and other environment variables so that all these tools
         are runnable from a bash shell. Still standing in `$ERL_TOP`, issue
-        the following commands (for 32-bit Windows, remove the x64 from the
-        first row and change `otp_win64_%OTP-REL%` to `otp_win32_%OTP-REL%` on
-        the last row):
+        the following commands:
 
             $ eval `./otp_build env_win32 arm64`
             $ ./otp_build configure
             $ ./otp_build boot -a
-            $ ./otp_build release -a
-            $ ./otp_build installer_win32
-            $ release/win32/otp_win64_%OTP-REL% /S
 
-    Voila! `Start->Programs->Erlang OTP %OTP-REL%->Erlang` starts the Erlang
-    Windows shell.
+    Voila! `bin/erl.exe` starts the Erlang shell.
 
 
 Tools you Need and Their Environment
