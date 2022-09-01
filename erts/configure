@@ -3795,10 +3795,10 @@ test -n "$target_alias" &&
     case $host in #(
   local-aarch64-*-windows) :
 
-                host=win32_arm64
-                host_os=win32_arm64
+                host=win32
+                host_os=win32
                 host_vendor=
-                host_cpu=
+                host_cpu=aarch64
              ;; #(
   local-*-windows) :
 
@@ -3816,10 +3816,10 @@ esac
     case $build in #(
   local-aarch64-*-windows) :
   
-                build=win32_arm64
-                build_os=win32_arm64
+                build=win32
+                build_os=win32
                 build_vendor=
-                build_cpu=
+                build_cpu=aarch64
              ;; #(
   local-*-windows) :
 
@@ -3837,10 +3837,10 @@ esac
     case $target in #(
   local-aarch64-*-windows) :
   
-                target=win32_arm64
-                target_os=win32_arm64
+                target=win32
+                target_os=win32
                 target_vendor=
-                target_cpu=
+                target_cpu=aarch64
              ;; #(
   local-*-windows) :
 
