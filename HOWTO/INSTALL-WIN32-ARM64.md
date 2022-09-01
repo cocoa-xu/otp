@@ -97,19 +97,6 @@ the different tools:
       <http://visualstudio.microsoft.com/downloads>
     Install C++ and SDK packages to the default installation directory.
 
-*   Nullsoft NSIS installer system (optional)
-    You need this to build the self installing package.
-
-    Download and run the installer from:
-    URL: <http://nsis.sourceforge.net/download>
-
-    Add 'makensis.exe' to your path environment:
-
-         `PATH="/mnt/c/Program\ Files/NSIS/Bin:$PATH`
-
-    Type `which makensis.exe` in the bash prompt and you should get the
-    path to the program.
-
 *   Get the Erlang source distribution (from <http://www.erlang.org/download.html>).
     The same as for Unix platforms. Preferably use tar to
     unpack the source tar.gz (`tar zxf otp_src_%OTP-REL%.tar.gz`) to somewhere
