@@ -649,7 +649,7 @@ echo_env_cygwin ()
     echo_setenv OVERRIDE_TARGET win32 ';'
     if [ X"$X64" = X"true" ]; then
         echo_setenv CONFIG_SUBTYPE win64 ';'
-	elif [ X"$ARM64" = X"true" ]; then
+	elif [ X"$ARM64" = X"arm64" -o X"$ARM64" = X"x64_arm64" ]; then
 		echo_setenv CONFIG_SUBTYPE arm64 ';'
     fi
     echo_setenv CC cc.sh ';'
@@ -661,7 +661,7 @@ echo_env_cygwin ()
 	    echo_setenv OVERRIDE_CONFIG_CACHE_STATIC  "$ERL_TOP/make/autoconf/win64.config.cache.static" ';'
         fi
         echo_setenv OVERRIDE_CONFIG_CACHE "$ERL_TOP/make/autoconf/win64.config.cache" ';'
-	elif [ X"$ARM64" = X"true" ]; then
+	elif [ X"$ARM64" = X"arm64" -o X"$ARM64" = X"x64_arm64" ]; then
 		if [ -f "$ERL_TOP/make/autoconf/win64.config.cache.static" ]; then
 	    echo_setenv OVERRIDE_CONFIG_CACHE_STATIC  "$ERL_TOP/make/autoconf/win64-arm64.config.cache.static" ';'
         fi
@@ -722,7 +722,7 @@ echo_env_msys ()
     echo_setenv OVERRIDE_TARGET win32 ';'
     if [ X"$X64" = X"true" ]; then
         echo_setenv CONFIG_SUBTYPE win64 ';'
-	elif [ X"$ARM64" = X"true" ]; then
+	elif [ X"$ARM64" = X"arm64" -o X"$ARM64" = X"x64_arm64" ]; then
 		echo_setenv CONFIG_SUBTYPE arm64 ';'
     fi
     echo_setenv CC cc.sh ';'
@@ -734,7 +734,7 @@ echo_env_msys ()
 	    echo_setenv OVERRIDE_CONFIG_CACHE_STATIC  "$ERL_TOP/make/autoconf/win64.config.cache.static" ';'
         fi
         echo_setenv OVERRIDE_CONFIG_CACHE "$ERL_TOP/make/autoconf/win64.config.cache" ';'
-	elif [ X"$ARM64" = X"true" ]; then
+	elif [ X"$ARM64" = X"arm64" -o X"$ARM64" = X"x64_arm64" ]; then
 		if [ -f "$ERL_TOP/make/autoconf/win64.config.cache.static" ]; then
 	    echo_setenv OVERRIDE_CONFIG_CACHE_STATIC  "$ERL_TOP/make/autoconf/win64-arm64.config.cache.static" ';'
         fi
@@ -771,8 +771,10 @@ echo_env_wsl ()
     if [ ! -n "`lookup_prog_in_path cl`" ]; then
         if [ X"$X64" = X"true" ]; then
             setup_win32_cl_env "x64" `wslpath -a -m erts/etc/win32/wsl_tools/SetupWSLcross.bat`
-		elif [ X"$ARM64" = X"true" ]; then
+		elif [ X"$ARM64" = X"arm64" ]; then
 			setup_win32_cl_env "arm64" `wslpath -a -m erts/etc/win32/wsl_tools/SetupWSLcross.bat`
+		elif [ X"$ARM64" = X"x64_arm64" ]; then
+			setup_win32_cl_env "x64_arm64" `wslpath -a -m erts/etc/win32/wsl_tools/SetupWSLcross.bat`
         else
             setup_win32_cl_env "x86" `wslpath -a -m erts/etc/win32/wsl_tools/SetupWSLcross.bat`
         fi
@@ -780,7 +782,7 @@ echo_env_wsl ()
     echo_setenv OVERRIDE_TARGET win32 ';'
     if [ X"$X64" = X"true" ]; then
         echo_setenv CONFIG_SUBTYPE win64 ';'
-	elif [ X"$ARM64" = X"true" ]; then
+	elif [ X"$ARM64" = X"arm64" -o X"$ARM64" = X"x64_arm64" ]; then
 		echo_setenv CONFIG_SUBTYPE arm64 ';'
     fi
     echo_setenv WSLcross true ';'
@@ -793,7 +795,7 @@ echo_env_wsl ()
 	    echo_setenv OVERRIDE_CONFIG_CACHE_STATIC  "$ERL_TOP/make/autoconf/win64.config.cache.static" ';'
         fi
         echo_setenv OVERRIDE_CONFIG_CACHE "$ERL_TOP/make/autoconf/win64.config.cache" ';'
-	elif [ X"$ARM64" = X"true" ]; then
+	elif [ X"$ARM64" = X"arm64" -o X"$ARM64" = X"x64_arm64" ]; then
 		if [ -f "$ERL_TOP/make/autoconf/win64.config.cache.static" ]; then
 	    echo_setenv OVERRIDE_CONFIG_CACHE_STATIC  "$ERL_TOP/make/autoconf/win64-arm64.config.cache.static" ';'
         fi
@@ -1297,10 +1299,12 @@ case "$1" in
 	env_win32)
 		if [ x"$2" = x"x64" -o x"$2" = x"amd64" ]; then
 			ISX64=true
-		fi
-		if [ x"$2" = x"arm64" ]; then
+		elif [ x"$2" = x"arm64" ]; then
 			ISX64=false
-			ISARM64=true
+			ISARM64=arm64
+		elif [ x"$2" = x"x64_arm64" ]; then
+			ISX64=false
+			ISARM64=x64_arm64
 		fi
 		if [ -x /bin/wslpath ]; then
 			echo_env_wsl $ISX64 $ISARM64
@@ -1315,7 +1319,10 @@ case "$1" in
 		ISX64=true
 		if [ x"$2" = x"arm64" ]; then
 			ISX64=false
-			ISARM64=true
+			ISARM64=arm64
+		elif [ x"$2" = x"x64_arm64" ]; then
+			ISX64=false
+			ISARM64=x64_arm64
 		fi
 		if [ -x /bin/wslpath ]; then
 			echo_env_wsl $ISX64 $ISARM64 
@@ -1330,7 +1337,10 @@ case "$1" in
 		ISX64=true
 		if [ x"$2" = x"arm64" ]; then
 			ISX64=false
-			ISARM64=true
+			ISARM64=arm64
+		elif [ x"$2" = x"x64_arm64" ]; then
+			ISX64=false
+			ISARM64=x64_arm64
 		fi
 		echo_env_msys $ISX64 $ISARM64;;
 	env_cross)
