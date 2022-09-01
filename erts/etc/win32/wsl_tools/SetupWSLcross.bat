@@ -2,9 +2,14 @@
 rem Setup MCL and echo the environment
 rem Usage: eval `cmd.exe /c SetupWSLcross.bat x64`
 
+set VCVARSBAT="vcvarsall.bat"
 IF "%~1"=="x86" GOTO search
 IF "%~1"=="x64" GOTO search
 IF "%~1"=="arm64" GOTO search
+IF "%~1"=="x64_arm64" (
+   set VCVARSBAT="vcvarsamd64_arm64.bat"
+   GOTO search
+)
 
 GOTO badarg
 
@@ -71,6 +76,69 @@ IF EXIST "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat".
 
 GOTO no_vcvars
 
+:cross_search
+IF EXIST "C:\Program Files\Microsoft Visual Studio\2022\Preview\VC\Auxiliary\Build\%VCVARSBAT%". (
+   call "C:\Program Files\Microsoft Visual Studio\2022\Preview\VC\Auxiliary\Build\%VCVARSBAT%" > nul
+   goto continue
+)
+
+IF EXIST "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\%VCVARSBAT%". (
+   call "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\%VCVARSBAT%" > nul
+   goto continue
+)
+
+IF EXIST "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\%VCVARSBAT%". (
+   call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\%VCVARSBAT%" > nul
+   goto continue
+)
+
+IF EXIST "C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\%VCVARSBAT%". (
+   call "C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\%VCVARSBAT%" > nul
+   goto continue
+)
+
+IF EXIST "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\%VCVARSBAT%". (
+   call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\%VCVARSBAT%" > nul
+   goto continue
+)
+
+IF EXIST "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\%VCVARSBAT%". (
+   call "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\%VCVARSBAT%" > nul
+   goto continue
+)
+
+IF EXIST "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\%VCVARSBAT%". (
+   call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\%VCVARSBAT%" > nul
+   goto continue
+)
+
+IF EXIST "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\%VCVARSBAT%". (
+   call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\%VCVARSBAT%" > nul
+   goto continue
+)
+
+IF EXIST "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\%VCVARSBAT%". (
+   call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\%VCVARSBAT%" > nul
+   goto continue
+)
+
+IF EXIST "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\%VCVARSBAT%". (
+   call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\%VCVARSBAT%" > nul
+   goto continue
+)
+
+IF EXIST "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\%VCVARSBAT%". (
+   call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\%VCVARSBAT%" > nul
+   goto continue
+)
+
+IF EXIST "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\%VCVARSBAT%". (
+   call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\%VCVARSBAT%" > nul
+   goto continue
+)
+
+GOTO no_vcvars
+
 :continue
 
 FOR /F "delims==" %%F IN ('where cl.exe') DO SET _cl_exec_=%%F
@@ -93,10 +161,10 @@ wsl.exe echo "# Eval this file eval \`cmd.exe /c SetupWSLcross.bat\`"
 exit
 
 :badarg
-echo "Bad TARGET or not specified: %~1 expected x86 or x64"
+echo "Bad TARGET or not specified: %~1 expected x86, x64, arm64 or x64_arm64"
 exit
 
 :no_vcvars
-echo "Error: SetupWSLcross.bat: Could not find vcvarsall.bat"
+echo "Error: SetupWSLcross.bat: Could not find %VCVARSBAT%"
 echo "   edit erts/etc/win32/wsl_tools/SetupWSLcross.bat"
 exit
