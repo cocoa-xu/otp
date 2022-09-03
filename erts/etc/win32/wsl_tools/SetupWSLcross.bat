@@ -2,14 +2,11 @@
 rem Setup MCL and echo the environment
 rem Usage: eval `cmd.exe /c SetupWSLcross.bat x64`
 
-set VCVARSBAT="vcvarsall.bat"
+set MACHINE="%~1"
 IF "%~1"=="x86" GOTO search
 IF "%~1"=="x64" GOTO search
 IF "%~1"=="arm64" GOTO search
-IF "%~1"=="x64_arm64" (
-   set VCVARSBAT="vcvarsamd64_arm64.bat"
-   GOTO search
-)
+IF "%~1"=="amd64_arm64" GOTO search
 
 GOTO badarg
 
@@ -76,72 +73,14 @@ IF EXIST "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat".
 
 GOTO no_vcvars
 
-:cross_search
-IF EXIST "C:\Program Files\Microsoft Visual Studio\2022\Preview\VC\Auxiliary\Build\%VCVARSBAT%". (
-   call "C:\Program Files\Microsoft Visual Studio\2022\Preview\VC\Auxiliary\Build\%VCVARSBAT%" > nul
-   goto continue
-)
-
-IF EXIST "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\%VCVARSBAT%". (
-   call "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\%VCVARSBAT%" > nul
-   goto continue
-)
-
-IF EXIST "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\%VCVARSBAT%". (
-   call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\%VCVARSBAT%" > nul
-   goto continue
-)
-
-IF EXIST "C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\%VCVARSBAT%". (
-   call "C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\Build\%VCVARSBAT%" > nul
-   goto continue
-)
-
-IF EXIST "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\%VCVARSBAT%". (
-   call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\%VCVARSBAT%" > nul
-   goto continue
-)
-
-IF EXIST "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\%VCVARSBAT%". (
-   call "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\%VCVARSBAT%" > nul
-   goto continue
-)
-
-IF EXIST "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\%VCVARSBAT%". (
-   call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\%VCVARSBAT%" > nul
-   goto continue
-)
-
-IF EXIST "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\%VCVARSBAT%". (
-   call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\%VCVARSBAT%" > nul
-   goto continue
-)
-
-IF EXIST "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\%VCVARSBAT%". (
-   call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\%VCVARSBAT%" > nul
-   goto continue
-)
-
-IF EXIST "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\%VCVARSBAT%". (
-   call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\%VCVARSBAT%" > nul
-   goto continue
-)
-
-IF EXIST "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\%VCVARSBAT%". (
-   call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\%VCVARSBAT%" > nul
-   goto continue
-)
-
-IF EXIST "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\%VCVARSBAT%". (
-   call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\%VCVARSBAT%" > nul
-   goto continue
-)
-
-GOTO no_vcvars
-
 :continue
 
-FOR /F "delims==" %%F IN ('where cl.exe') DO SET _cl_exec_=%%F
+FOR /F "delims==" %%F IN ('where cl.exe') DO (
+   SET _cl_exec_=%%F
+   GOTO found_cl
+)
+
+:found_cl
 FOR %%F IN ("%_cl_exec_%") DO SET CL_PATH=%%~dpF
 
 FOR /F "delims==" %%F IN ('where rc.exe') DO SET _rc_exec_=%%F

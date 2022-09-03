@@ -779,7 +779,7 @@ echo_env_wsl ()
 		elif [ X"$ARM64" = X"arm64" ]; then
 			setup_win32_cl_env "arm64" `wslpath -a -m erts/etc/win32/wsl_tools/SetupWSLcross.bat`
 		elif [ X"$ARM64" = X"x64_arm64" ]; then
-			setup_win32_cl_env "x64_arm64" `wslpath -a -m erts/etc/win32/wsl_tools/SetupWSLcross.bat`
+			setup_win32_cl_env "amd64_arm64" `wslpath -a -m erts/etc/win32/wsl_tools/SetupWSLcross.bat`
         else
             setup_win32_cl_env "x86" `wslpath -a -m erts/etc/win32/wsl_tools/SetupWSLcross.bat`
         fi
