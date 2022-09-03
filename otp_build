@@ -170,8 +170,9 @@ set_config_flags ()
 	#   the cross configuration have been moved here). 
 
 	if target_contains win32; then
+		echo "CONFIG_SUBTYPE: $CONFIG_SUBTYPE"
 		if [ "$CONFIG_SUBTYPE" = "x64_arm64" ]; then
-			CONFIG_FLAGS="--build=$bht_type --host=$bht_type --target=$bht_type $CONFIG_FLAGS" 
+			CONFIG_FLAGS="--build=local-x86_64-pc-windows --host=local-aarch64-pc-windows --target=local-aarch64-pc-windows $CONFIG_FLAGS" 
 	    else
 			if [ "$CONFIG_SUBTYPE" = "win64" ]; then
 			bht_type=local-x86_64-pc-windows
@@ -654,7 +655,7 @@ echo_env_cygwin ()
     if [ X"$X64" = X"true" ]; then
         echo_setenv CONFIG_SUBTYPE win64 ';'
 	elif [ X"$ARM64" = X"arm64" -o X"$ARM64" = X"x64_arm64" ]; then
-		echo_setenv CONFIG_SUBTYPE arm64 ';'
+		echo_setenv CONFIG_SUBTYPE "$ARM64" ';'
     fi
     echo_setenv CC cc.sh ';'
     echo_setenv CXX cc.sh ';'
@@ -666,10 +667,10 @@ echo_env_cygwin ()
         fi
         echo_setenv OVERRIDE_CONFIG_CACHE "$ERL_TOP/make/autoconf/win64.config.cache" ';'
 	elif [ X"$ARM64" = X"arm64" -o X"$ARM64" = X"x64_arm64" ]; then
-		if [ -f "$ERL_TOP/make/autoconf/win64.config.cache.static" ]; then
-	    echo_setenv OVERRIDE_CONFIG_CACHE_STATIC  "$ERL_TOP/make/autoconf/win64-arm64.config.cache.static" ';'
+		if [ -f "$ERL_TOP/make/autoconf/win64-$ARM64.config.cache.static" ]; then
+	    echo_setenv OVERRIDE_CONFIG_CACHE_STATIC  "$ERL_TOP/make/autoconf/win64-$ARM64.config.cache.static" ';'
         fi
-        echo_setenv OVERRIDE_CONFIG_CACHE "$ERL_TOP/make/autoconf/win64-arm64.config.cache" ';'
+        echo_setenv OVERRIDE_CONFIG_CACHE "$ERL_TOP/make/autoconf/win64-$ARM64.config.cache" ';'
     else
         if [ -f "$ERL_TOP/make/autoconf/win32.config.cache.static" ]; then
 	    echo_setenv OVERRIDE_CONFIG_CACHE_STATIC  "$ERL_TOP/make/autoconf/win32.config.cache.static" ';'
@@ -727,7 +728,7 @@ echo_env_msys ()
     if [ X"$X64" = X"true" ]; then
         echo_setenv CONFIG_SUBTYPE win64 ';'
 	elif [ X"$ARM64" = X"arm64" -o X"$ARM64" = X"x64_arm64" ]; then
-		echo_setenv CONFIG_SUBTYPE arm64 ';'
+		echo_setenv CONFIG_SUBTYPE "$ARM64" ';'
     fi
     echo_setenv CC cc.sh ';'
     echo_setenv CXX cc.sh ';'
@@ -739,10 +740,10 @@ echo_env_msys ()
         fi
         echo_setenv OVERRIDE_CONFIG_CACHE "$ERL_TOP/make/autoconf/win64.config.cache" ';'
 	elif [ X"$ARM64" = X"arm64" -o X"$ARM64" = X"x64_arm64" ]; then
-		if [ -f "$ERL_TOP/make/autoconf/win64.config.cache.static" ]; then
-	    echo_setenv OVERRIDE_CONFIG_CACHE_STATIC  "$ERL_TOP/make/autoconf/win64-arm64.config.cache.static" ';'
+		if [ -f "$ERL_TOP/make/autoconf/win64-$ARM64.config.cache.static" ]; then
+	    echo_setenv OVERRIDE_CONFIG_CACHE_STATIC  "$ERL_TOP/make/autoconf/win64-$ARM64.config.cache.static" ';'
         fi
-        echo_setenv OVERRIDE_CONFIG_CACHE "$ERL_TOP/make/autoconf/win64-arm64.config.cache" ';'
+        echo_setenv OVERRIDE_CONFIG_CACHE "$ERL_TOP/make/autoconf/win64-$ARM64.config.cache" ';'
     else
         if [ -f "$ERL_TOP/make/autoconf/win32.config.cache.static" ]; then
 	    echo_setenv OVERRIDE_CONFIG_CACHE_STATIC  "$ERL_TOP/make/autoconf/win32.config.cache.static" ';'
@@ -787,7 +788,7 @@ echo_env_wsl ()
     if [ X"$X64" = X"true" ]; then
         echo_setenv CONFIG_SUBTYPE win64 ';'
 	elif [ X"$ARM64" = X"arm64" -o X"$ARM64" = X"x64_arm64" ]; then
-		echo_setenv CONFIG_SUBTYPE arm64 ';'
+		echo_setenv CONFIG_SUBTYPE "$ARM64" ';'
     fi
     echo_setenv WSLcross true ';'
     echo_setenv CC cc.sh ';'
@@ -800,10 +801,10 @@ echo_env_wsl ()
         fi
         echo_setenv OVERRIDE_CONFIG_CACHE "$ERL_TOP/make/autoconf/win64.config.cache" ';'
 	elif [ X"$ARM64" = X"arm64" -o X"$ARM64" = X"x64_arm64" ]; then
-		if [ -f "$ERL_TOP/make/autoconf/win64.config.cache.static" ]; then
-	    echo_setenv OVERRIDE_CONFIG_CACHE_STATIC  "$ERL_TOP/make/autoconf/win64-arm64.config.cache.static" ';'
+		if [ -f "$ERL_TOP/make/autoconf/win64-$ARM64.config.cache.static" ]; then
+	    echo_setenv OVERRIDE_CONFIG_CACHE_STATIC  "$ERL_TOP/make/autoconf/win64-$ARM64.config.cache.static" ';'
         fi
-        echo_setenv OVERRIDE_CONFIG_CACHE "$ERL_TOP/make/autoconf/win64-arm64.config.cache" ';'
+        echo_setenv OVERRIDE_CONFIG_CACHE "$ERL_TOP/make/autoconf/win64-$ARM64.config.cache" ';'
     else
         if [ -f "$ERL_TOP/make/autoconf/win32.config.cache.static" ]; then
 	    echo_setenv OVERRIDE_CONFIG_CACHE_STATIC  "$ERL_TOP/make/autoconf/win32.config.cache.static" ';'

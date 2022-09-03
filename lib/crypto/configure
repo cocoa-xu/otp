@@ -3195,7 +3195,7 @@ esac
      ;;
 esac
 
-    if test "$cross_compiling" = "yes" -a "$build" = "$host"
+    if test "$cross_compiling" = "yes" -a "$build" = "$host" -a "$build_cpu" = "$host_cpu"
 then :
   as_fn_error $? "
            Cross compiling with the same canonicalized 'host' value
