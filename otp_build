@@ -170,14 +170,18 @@ set_config_flags ()
 	#   the cross configuration have been moved here). 
 
 	if target_contains win32; then
-	    if [ "$CONFIG_SUBTYPE" = "win64" ]; then
-		bht_type=local-x86_64-pc-windows
-		elif [ "$CONFIG_SUBTYPE" = "arm64" ]; then
-		bht_type=local-aarch64-pc-windows
+		if [ "$CONFIG_SUBTYPE" = "x64_arm64" ]; then
+			CONFIG_FLAGS="--build=$bht_type --host=$bht_type --target=$bht_type $CONFIG_FLAGS" 
 	    else
-		bht_type=local-x86-pc-windows
-	    fi
-	    CONFIG_FLAGS="--build=$bht_type --host=$bht_type --target=$bht_type $CONFIG_FLAGS" 
+			if [ "$CONFIG_SUBTYPE" = "win64" ]; then
+			bht_type=local-x86_64-pc-windows
+			elif [ "$CONFIG_SUBTYPE" = "arm64" ]; then
+			bht_type=local-aarch64-pc-windows
+			else
+			bht_type=local-x86-pc-windows
+			fi
+			CONFIG_FLAGS="--build=$bht_type --host=$bht_type --target=$bht_type $CONFIG_FLAGS" 
+		fi
 	fi
 	    
 
