@@ -3451,6 +3451,13 @@ test -n "$target_alias" &&
 
     # Adjust for local legacy windows hack...
     case $host in #(
+  local-aarch64-*-windows) :
+
+                host=win32
+                host_os=win32
+                host_vendor=
+                host_cpu=aarch64
+             ;; #(
   local-*-windows) :
 
                 host=win32
@@ -3465,6 +3472,13 @@ esac
 
     # Adjust for local legacy windows hack...
     case $build in #(
+  local-aarch64-*-windows) :
+  
+                host=win32
+                host_os=win32
+                host_vendor=
+                host_cpu=aarch64
+             ;; #(
   local-*-windows) :
 
                 build=win32
@@ -3479,6 +3493,13 @@ esac
 
     # Adjust for local legacy windows hack...
     case $target in #(
+  local-aarch64-*-windows) :
+  
+                host=win32
+                host_os=win32
+                host_vendor=
+                host_cpu=aarch64
+             ;; #(
   local-*-windows) :
 
                 target=win32
@@ -3490,7 +3511,7 @@ esac
      ;;
 esac
 
-    if test "$cross_compiling" = "yes" -a "$build" = "$host"
+    if test "$cross_compiling" = "yes" -a "$build" = "$host" -a "$build_cpu" = "$host_cpu"
 then :
   as_fn_error $? "
            Cross compiling with the same canonicalized 'host' value
