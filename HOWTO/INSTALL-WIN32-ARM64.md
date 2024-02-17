@@ -193,7 +193,7 @@ Building and Installing
 
 Building is easiest using the `otp_build` script:
 
-    $ ./otp_build configure --with-ssl=/mnt/c/OpenSSL-Win64 --disable-dynamic-ssl-lib --disable-jit --disable-smp-require-native-atomics <optional configure options>
+    $ ./otp_build configure --with-ssl=/mnt/c/OpenSSL-Win64 --disable-dynamic-ssl-lib --disable-smp-require-native-atomics <optional configure options>
     $ ./otp_build boot -a
     $ ./otp_build release -a <installation directory>
     $ ./otp_build installer_win32 <installation directory> # optional
