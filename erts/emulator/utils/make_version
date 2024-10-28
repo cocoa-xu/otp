@@ -52,7 +52,7 @@ my $architecture = shift;
 defined $architecture or die "No architecture specified";
 $architecture =~ s&^.*[/\\]&&;	# Remove directory part if any
 
-if ($architecture == "win32" && %ENV{"CONFIG_SUBTYPE"} == "arm64") {
+if ($architecture eq "win32" && %ENV{"CONFIG_SUBTYPE"} eq "arm64") {
   $architecture = "aarch64-pc-windows";
 }
 
