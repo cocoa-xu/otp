@@ -49,7 +49,7 @@ REL_SCRIPTS = \
 	$(SS_ROOT)/start_all_example.rel \
 	$(SS_ROOT)/no_dot_erlang.rel \
 
-ifneq ($(findstring win32,$(TARGET)),win32)
+ifeq ($(findstring -pc-windows,$(TARGET)),)
 RELEASES_SRC = RELEASES.src
 endif
 
@@ -198,7 +198,7 @@ include $(ERL_TOP)/make/otp_release_targets.mk
 
 release_spec: script
 	$(V_at)$(INSTALL_DIR) "$(RELEASE_PATH)/releases/$(SYSTEM_VSN)"
-ifneq ($(findstring win32,$(TARGET)),win32)
+ifeq ($(findstring -pc-windows,$(TARGET)),)
 	$(V_at)$(INSTALL_DATA) RELEASES.src "$(RELEASE_PATH)/releases"
 endif
 	$(V_at)$(INSTALL_DATA) $(INSTALL_SCRIPTS) $(REL_SCRIPTS) \

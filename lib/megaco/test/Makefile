@@ -33,7 +33,7 @@ VSN=$(MEGACO_VSN)
 # ----------------------------------------------------
 RELSYSDIR = $(RELEASE_PATH)/megaco_test
 
-ifeq ($(findstring win32,$(TARGET)),win32)
+ifneq ($(findstring -pc-windows,$(TARGET)),)
 
 MAKEFILE_SRC = Makefile.win32.src
 

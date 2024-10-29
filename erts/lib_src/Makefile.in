@@ -22,7 +22,7 @@ include $(ERL_TOP)/make/output.mk
 include $(ERL_TOP)/make/target.mk
 include ../include/internal/$(TARGET)/ethread.mk
 
-ifeq ($(TARGET),win32)
+ifneq ($(findstring -pc-windows,$(TARGET)),)
 EXE_SUFFIX=.exe
 else
 EXE_SUFFIX=
@@ -518,7 +518,7 @@ SED_REPL_MTd_O=s|^\([^:]*\)\.o:|$$(MTd_OBJ_DIR)/\1.o:|g
 SED_REPL_TT_DIR=s|$(TT_DIR)/|$$(TT_DIR)/|g
 SED_REPL_TARGET=s|$(TARGET)/|$$(TARGET)/|g
 
-ifeq ($(TARGET),win32)
+ifneq ($(findstring -pc-windows,$(TARGET)),)
 #SED_PREFIX=$(SED_REPL_WIN_DRIVE);
 SED_PREFIX=
 DEP_FLAGS=$(subst -O3,,$(subst -O2,,$(CFLAGS))) $(INCLUDES)

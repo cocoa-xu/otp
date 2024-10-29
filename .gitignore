@@ -62,6 +62,9 @@ local.static.config.cache
 tcltk85_win32_bin.tar.gz
 make/autoconf/win32.config.cache
 make/autoconf/win64.config.cache
+i686-pc-windows
+x86_64-pc-windows
+aarch64-pc-windows
 erts/emulator/obj/
 erts/emulator/pcre/obj/
 erts/emulator/pcre/win32/

@@ -48,7 +48,7 @@ XNIX = false
 endif
 endif
 
-ifneq ($(findstring win32,$(TARGET)),win32)
+ifeq ($(findstring -pc-windows,$(TARGET)),)
 
 # ====================================================
 # UNIX / LINUX

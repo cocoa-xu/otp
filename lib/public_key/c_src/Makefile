@@ -80,7 +80,7 @@ RELSYSDIR = $(RELEASE_PATH)/lib/public_key-$(VSN)
 # Misc Macros
 # ----------------------------------------------------
 
-ifeq ($(TARGET),win32)
+ifneq ($(findstring -pc-windows,$(TARGET)),)
 PUBKEY_LIB = $(LIBDIR)/$(PUBKEY_LIBNAME)$(TYPEMARKER).$(DED_EXT)
 DIRS = $(OBJDIR) $(LIBDIR)
 endif
@@ -116,7 +116,7 @@ docs:
 # ----------------------------------------------------
 include $(ERL_TOP)/make/otp_release_targets.mk
 
-ifeq ($(TARGET),win32)
+ifneq ($(findstring -pc-windows,$(TARGET)),)
 release_spec: opt
 	$(INSTALL_DIR) "$(RELSYSDIR)/priv/lib"
 	$(INSTALL_PROGRAM) $(PUBKEY_LIB) "$(RELSYSDIR)/priv/lib"

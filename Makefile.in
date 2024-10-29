@@ -228,7 +228,7 @@ BOOTSTRAP_ROOT = $(ERL_TOP)
 # locally built system. (This can be put in front or back of the path
 # depending on which system is preferred.)
 LOCAL_PATH     = $(ERL_TOP)/erts/bin/$(TARGET):$(ERL_TOP)/erts/bin
-ifeq ($(TARGET),win32)
+ifneq ($(findstring -pc-windows,$(TARGET)),)
 BOOT_PREFIX=$(WIN32_WRAPPER_PATH):$(BOOTSTRAP_ROOT)/bootstrap/bin:
 TEST_PATH_PREFIX=$(WIN32_WRAPPER_PATH):$(ERL_TOP)/bin/win32:
 else
@@ -557,7 +557,7 @@ dep depend:
 # ----------------------------------------------------------------------
 # Bootstraps... 
 # ----------------------------------------------------------------------
-ifeq ($(TARGET),win32)
+ifneq ($(findstring -pc-windows,$(TARGET)),)
 
 # Sleep for 11 seconds if we use ERLC server in order to let it
 # terminate before we remove the bootstrap files

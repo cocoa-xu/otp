@@ -778,12 +778,16 @@ echo_env_wsl ()
             setup_win32_cl_env "x86" `wslpath -a -m erts/etc/win32/wsl_tools/SetupWSLcross.bat`
         fi
     fi
-    echo_setenv OVERRIDE_TARGET win32 ';'
+    
     if [ X"$ARCH" = X"x64" ]; then
+		echo_setenv OVERRIDE_TARGET x86_64-pc-windows ';'
         echo_setenv CONFIG_SUBTYPE win64 ';'
     elif [ X"$ARCH" = X"arm64" -o X"$ARCH" = X"x64_arm64" ]; then
+		echo_setenv OVERRIDE_TARGET aarch64-pc-windows ';'
         echo_setenv CONFIG_SUBTYPE "$ARCH" ';'
-    fi
+    else
+		echo_setenv OVERRIDE_TARGET i686-pc-windows ';'
+	fi
     echo_setenv WSLcross true ';'
     echo_setenv CC cc.sh ';'
     echo_setenv CXX cc.sh ';'

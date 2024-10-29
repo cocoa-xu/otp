@@ -127,7 +127,7 @@ DEPDIR=$(ERL_TOP)/lib/ssh/src/deps
 DEP_FILE=$(DEPDIR)/ssh.d
 $(shell mkdir -p $(dir $(DEP_FILE)) >/dev/null)
 
-ifeq ($(TARGET), win32)
+ifneq ($(findstring -pc-windows,$(TARGET)),)
   # Native path without C: ignore driveletter case
   ERL_TOP_NATIVE = $(shell w32_path.sh -m $(ERL_TOP) | sed "s@[a-zA-Z]:@:@")
 else

@@ -96,7 +96,7 @@ APPUP_FILE   = diameter.appup
 APPUP_SRC    = $(APPUP_FILE).src
 APPUP_TARGET = $(EBIN)/$(APPUP_FILE)
 
-ifeq ($(TARGET),win32)
+ifneq ($(findstring -pc-windows,$(TARGET)),)
   EXE_SUFFIX=.exe
 else
   EXE_SUFFIX=

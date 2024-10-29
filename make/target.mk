@@ -54,7 +54,7 @@ endif
 endif
 
 ifneq ($(TARGET),)
-ifneq ($(TARGET),win32)
+ifneq ($(findstring -pc-windows,$(TARGET)),)
 override TARGET := $(shell $(ERL_TOP)/make/autoconf/config.sub $(TARGET))
 else
 endif

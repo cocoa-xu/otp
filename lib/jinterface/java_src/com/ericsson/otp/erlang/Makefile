@@ -67,7 +67,7 @@ JARFILE= OtpErlang.jar
 # ----------------------------------------------------
 # Programs and Flags
 # ----------------------------------------------------
-ifeq ($(TARGET),win32)
+ifneq ($(findstring -pc-windows,$(TARGET)),)
     JAR=jar.exe
 else
     JAR=jar
