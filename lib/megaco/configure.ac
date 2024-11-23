@@ -141,7 +141,7 @@ AC_SUBST(ENABLE_MEGACO_FLEX_SCANNER_LINENO)
 
 
 dnl This is the os flavour, should be unix or win32
-if test "X$host" = "Xwin32"; then
+if test "X$host_os" = "Xwindows"; then
 	ERLANG_OSTYPE=win32
 else
 	ERLANG_OSTYPE=unix

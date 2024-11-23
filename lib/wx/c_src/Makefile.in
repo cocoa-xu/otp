@@ -57,6 +57,9 @@ include $(ERL_TOP)/make/$(TARGET)/otp_ded.mk
 ERL_INCS= $(DED_INCLUDES)
 
 SYS_TYPE    = @WXERL_SYS_TYPE@
+ifeq ($(findstring windows,$(SYS_TYPE)),windows)
+	SYS_TYPE = win32
+endif
 
 GENERAL_O   = $(GENERAL:%=$(SYS_TYPE)/%.o) 
 GENERATED_O = $(GENERATED_F:%=$(SYS_TYPE)/%.o)

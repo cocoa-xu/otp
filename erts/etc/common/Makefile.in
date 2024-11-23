@@ -60,7 +60,7 @@ ifneq ($(TARGET),arm-unknown-linux-androideabi)
 RTLIBS = @LIBRT@
 endif
 
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 ifeq ($(TYPE),debug)
 CFLAGS = $(subst -O2,-g,@CFLAGS@ @DEFS@ $(TYPE_FLAGS) @WFLAGS@ -I$(SYSOSDIR) \
 	-I$(EMUDIR) -I$(COMSYSDIR) $(ERTS_INCL) \
@@ -84,20 +84,20 @@ WINETC	  = ../win32
 THR_DEFS=@THR_DEFS@
 THR_LIBS=@THR_LIBS@
 
-ifeq ($(TARGET), win32)
+ifeq ($(OPSYS), windows)
 ETC       = $(WINETC)
 else
 ETC       = $(UXETC)
 endif
 
-ifeq ($(TARGET), win32)
+ifeq ($(OPSYS), windows)
 ERLEXEC = erlexec.dll
 else
 ERLEXEC = erlexec
 endif
 
 # On windows we always need reentrant libraries.
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 ERTS_INTERNAL_LIBS=-L../../lib/internal/$(TARGET) -lerts_internal_r$(ERTS_LIB_TYPEMARKER) @ERTS_INTERNAL_X_LIBS@
 else
 ERTS_INTERNAL_LIBS=-L../../lib/internal/$(TARGET) -lerts_internal$(ERTS_LIB_TYPEMARKER) @ERTS_INTERNAL_X_LIBS@ -lm
@@ -111,7 +111,7 @@ EI_LIB = -L$(ERL_TOP)/lib/erl_interface/obj/$(TARGET) -lei $(THR_LIBS)
 # Release directory specification
 # ----------------------------------------------------
 
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 CFLAGS += -I$(EMUOSDIR) -I$(WINETC)
 RC=rc.sh
 MC=mc.sh
@@ -283,7 +283,7 @@ endif
 # versions etc.
 #----------------------------------------------------------------------
 
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 
 $(BINDIR)/$(ERLEXEC): $(OBJDIR)/erlexec.o $(OBJDIR)/win_erlexec.o $(OBJDIR)/init_file.o  $(OBJDIR)/$(ERLRES_OBJ) $(ERTS_LIB)
 	$(V_LD) -dll $(LDFLAGS) -o $@ $(OBJDIR)/erlexec.o $(OBJDIR)/win_erlexec.o $(OBJDIR)/init_file.o $(OBJDIR)/$(ERLRES_OBJ) $(ERTS_INTERNAL_LIBS)
@@ -462,7 +462,7 @@ $(OBJDIR)/safe_string.o: $(ETC)/safe_string.c $(RC_GENERATED)
 $(BINDIR)/erl_call@EXEEXT@: $(ERL_TOP)/lib/erl_interface/bin/$(TARGET)/erl_call@EXEEXT@
 	$(ld_verbose)cp $< $@
 
-ifneq ($(TARGET),win32)
+ifneq ($(OPSYS),windows)
 $(BINDIR)/$(ERLEXEC): $(OBJDIR)/$(ERLEXEC).o $(ERTS_LIB)
 	$(ld_verbose) $(LD) $(LDFLAGS) -o $@ $(OBJDIR)/$(ERLEXEC).o $(ERTS_INTERNAL_LIBS)
 
@@ -533,7 +533,7 @@ ifneq ($(INSTALL_OBJS),)
 	$(INSTALL_DATA) $(INSTALL_OBJS) "$(RELEASE_PATH)/erts-$(VSN)/obj"
 endif
 	$(INSTALL_DIR) "$(RELEASE_PATH)/erts-$(VSN)/bin"
-ifneq ($(TARGET), win32)
+ifneq ($(OPSYS), windows)
 	$(INSTALL_SCRIPT) erl.src "$(RELEASE_PATH)/erts-$(VSN)/bin"
 # On Android, the shell is found in /system/bin/sh instead of /bin/sh
 	case "$(TARGET)" in \

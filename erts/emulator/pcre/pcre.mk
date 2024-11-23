@@ -51,7 +51,7 @@ PCRE_DIR =  $(ERL_TOP)/erts/emulator/pcre
 
 PCRE_CFLAGS = $(filter-out -DDEBUG,$(CFLAGS)) -DERLANG_INTEGRATION
 
-ifeq ($(TARGET), win32)
+ifeq ($(OPSYS), windows)
 $(EPCRE_LIB): $(PCRE_OBJS)
 	$(V_AR) -out:$@ $(PCRE_OBJS)
 else

@@ -175,23 +175,23 @@ set_config_flags ()
 	#   (in the cross compilation case the whole command line as well as
 	#   the cross configuration have been moved here). 
 
-	if target_contains win32; then
+	if target_contains windows; then
 		if [ "$CONFIG_SUBTYPE" = "win64" ]; then
-			build_type=local-x86_64-pc-windows
-			host_type=local-x86_64-pc-windows
-			target_type=local-x86_64-pc-windows
+			build_type=x86_64-pc-windows
+			host_type=x86_64-pc-windows
+			target_type=x86_64-pc-windows
 		elif [ "$CONFIG_SUBTYPE" = "arm64" ]; then
-			build_type=local-aarch64-pc-windows
-			host_type=local-aarch64-pc-windows
-			target_type=local-aarch64-pc-windows
+			build_type=aarch64-pc-windows
+			host_type=aarch64-pc-windows
+			target_type=aarch64-pc-windows
 		elif [ "$CONFIG_SUBTYPE" = "x64_arm64" ]; then
-			build_type=local-x86_64-pc-windows
-			host_type=local-aarch64-pc-windows
-			target_type=local-aarch64-pc-windows
+			build_type=x86_64-pc-windows
+			host_type=aarch64-pc-windows
+			target_type=aarch64-pc-windows
 	    else
-			build_type=local-x86-pc-windows
-			host_type=local-x86-pc-windows
-			target_type=local-x86-pc-windows
+			build_type=x86-pc-windows
+			host_type=x86-pc-windows
+			target_type=x86-pc-windows
 	    fi
 	    CONFIG_FLAGS="--build=$build_type --host=$host_type --target=$target_type $CONFIG_FLAGS" 
 	fi
@@ -778,11 +778,15 @@ echo_env_wsl ()
             setup_win32_cl_env "x86" `wslpath -a -m erts/etc/win32/wsl_tools/SetupWSLcross.bat`
         fi
     fi
-    echo_setenv OVERRIDE_TARGET win32 ';'
+
     if [ X"$ARCH" = X"x64" ]; then
-        echo_setenv CONFIG_SUBTYPE win64 ';'
+      echo_setenv OVERRIDE_TARGET x86_64-pc-windows ';'
+      echo_setenv CONFIG_SUBTYPE win64 ';'
     elif [ X"$ARCH" = X"arm64" -o X"$ARCH" = X"x64_arm64" ]; then
-        echo_setenv CONFIG_SUBTYPE "$ARCH" ';'
+	    echo_setenv OVERRIDE_TARGET aarch64-pc-windows ';'
+      echo_setenv CONFIG_SUBTYPE "$ARCH" ';'
+    else
+      echo_setenv OVERRIDE_TARGET i686-pc-windows ';'
     fi
     echo_setenv WSLcross true ';'
     echo_setenv CC cc.sh ';'
@@ -864,8 +868,9 @@ setup_make ()
 {
     if [ -z "$MAKE" ]; then
 	case $TARGET in
-	    win32)
-		MAKE=make;;
+	    *-windows)
+		MAKE=make
+		OPSYS=win32;;
 	    *)
 		if [ -n "`lookup_prog_in_path gmake`" ]; then
 		    MAKE=gmake
@@ -875,6 +880,7 @@ setup_make ()
        esac
     fi
     export MAKE
+		export OPSYS
 }
 
 get_do_commit ()
@@ -983,16 +989,22 @@ do_boot ()
 	TARGET=$BUILDSYS
 	$MAKE MAKE="$MAKE" BOOTSTRAP_ROOT=$BOOTSTRAP_ROOT CROSS_COMPILING=no TARGET=$TARGET bootstrap || exit 1
 	TARGET=`$MAKE target_configured`
-    elif [ "x$OVERRIDE_TARGET" != "x" -a "x$OVERRIDE_TARGET" != "xwin32" ]; then
+    elif [ "x$OVERRIDE_TARGET" != "x" -a "x$OPSYS" != "xwindows" ]; then
 	hide_vars OVERRIDE_TARGET TARGET
 	TARGET=$BUILDSYS
 	$MAKE MAKE="$MAKE" BOOTSTRAP_ROOT=$BOOTSTRAP_ROOT TARGET=$TARGET bootstrap || exit 1
 
 	restore_vars OVERRIDE_TARGET TARGET
+		elif [ "x$OVERRIDE_TARGET" != "x" -a "x$OPSYS" = "xwindows" ]; then
+		hide_vars OVERRIDE_TARGET TARGET
+	TARGET=$BUILDSYS
+	$MAKE MAKE="$MAKE" BOOTSTRAP_ROOT=$BOOTSTRAP_ROOT TARGET=$TARGET OPSYS=$OPSYS bootstrap || exit 1
+
+	restore_vars OVERRIDE_TARGET TARGET
     fi
 
     # Build it (including bootstrap if not cross compiling)
-    $MAKE MAKE="$MAKE" BOOTSTRAP_ROOT=$BOOTSTRAP_ROOT TARGET=$TARGET all || exit 1
+    $MAKE MAKE="$MAKE" BOOTSTRAP_ROOT=$BOOTSTRAP_ROOT TARGET=$TARGET OPSYS=$OPSYS all || exit 1
 }
 
 do_boot_emu ()

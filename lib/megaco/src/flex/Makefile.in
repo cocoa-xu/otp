@@ -55,7 +55,7 @@ PERL    = @PERL@
 # Shall we build the flex scanner or not.
 # We assume that it does not exist on windows...
 ifeq ($(ENABLE_MEGACO_FLEX_SCANNER),)
-ifeq ($(findstring win32,$(TARGET)), win32)
+ifeq ($(findstring windows,$(OPSYS)), windows)
 ENABLE_MEGACO_FLEX_SCANNER = false
 ENABLE_REENTRANT_MEGACO_FLEX_SCANNER = false
 else
@@ -78,7 +78,7 @@ ifeq ($(ENABLE_MEGACO_FLEX_SCANNER_LINENO),)
 # This is not really needed in this case (since we don't support
 # this for windows), but just to ensure that the variable _has_ 
 # a value...
-ifeq ($(findstring win32,$(TARGET)), win32)
+ifeq ($(findstring windows,$(OPSYS)), windows)
 ENABLE_MEGACO_FLEX_SCANNER_LINENO = true
 else
 ENABLE_MEGACO_FLEX_SCANNER_LINENO = @ENABLE_MEGACO_FLEX_SCANNER_LINENO@
@@ -119,7 +119,7 @@ C_TARGETS  = $(STD_DRV).c $(MT_DRV).c
 STD_DRV_NAME=-DMEGACO_DRV_NAME=\"$(STD_DRV)\"
 MT_DRV_NAME=-DMEGACO_DRV_NAME=\"$(MT_DRV)\"
 
-ifeq ($(findstring win32,$(TARGET)), win32)
+ifeq ($(findstring windows,$(OPSYS)), windows)
 FLEX_SCANNER_SO = 
 SOLIBS = $(FLEX_SCANNER_SO)
 else

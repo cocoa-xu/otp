@@ -70,7 +70,7 @@ LIBS = @LIBS@
 ifeq ($(TYPE),debug)
 TYPEMARKER = .debug
 TYPE_FLAGS = -g -DDEBUG
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 LDFLAGS += -g
 endif
 else
@@ -146,7 +146,7 @@ vpath %.c connect:encode:decode:misc:epmd:global:$(OPENSSL_VPATH)
 #  List targets
 ###########################################################################
 
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 EXE=.exe
 else
 EXE=
@@ -465,7 +465,7 @@ $(APP_TARGET): $(APP_SRC) ../vsn.mk
 $(APPUP_TARGET): $(APPUP_SRC) ../vsn.mk
 	$(vsn_verbose)sed -e 's;%VSN%;$(ERL_INTERFACE_VSN);' $< > $@
 
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 
 # Windows archive creation
 
@@ -528,7 +528,7 @@ $(MDD_EISHLIB): $(MDD_EIOBJECTS)
 #  erl_call   FIXME how to avoid explicit -lsocket on winows??? 
 ###########################################################################
 
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 $(ERL_CALL): $(ERLCALL) ../include/ei.h $(MD_EILIB)
 	$(ld_verbose) $(CC) -MD $(PROG_CFLAGS) $(THR_DEFS) -o $@ $(ERLCALL) \
 		-L$(OBJDIR) -lei_md $(THR_LIBS) $(LIBS) -lsocket

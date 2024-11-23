@@ -533,7 +533,7 @@ case $host_os in
         # behave closer to glibc assumptions.
         CPPFLAGS="$CPPFLAGS -D_ALL_SOURCE -D_LINUX_SOURCE_COMPAT"
         ;;
-    win32)
+    windows)
 	# The ethread library requires _WIN32_WINNT of at least 0x0403.
 	# -D_WIN32_WINNT=* from CPPFLAGS is saved in ETHR_DEFS.
 	CPPFLAGS="$CPPFLAGS -D_WIN32_WINNT=0x0600 -DWINVER=0x0600"
@@ -714,7 +714,7 @@ elif test $CROSS_COMPILING = yes; then
   else
     AC_MSG_RESULT([no, cross compiling])
   fi
-elif test "X$host" = "Xwin32"; then
+elif test "X$host_os" = "Xwindows"; then
   AC_MSG_RESULT([no, not supported in windows])
 elif test "X$PROFILE_GENERATE" = "Xtrue" -a "X$PROFILE_USE" = "Xtrue" -a "X$PROFILE_CORRECTION" = "Xtrue"; then
   ## We need -fprofile-generate and -fprofile-correction support to use PGO with
@@ -760,7 +760,7 @@ else
     fi
 fi
 case $chk_opsys_ in
-    win32)			OPSYS=win32;;
+    *windows)			OPSYS=windows;;
     solaris2.*|SunOS5.*)	OPSYS=sol2;;
     linux*|Linux)		OPSYS=linux;;
     darwin|Darwin)		OPSYS=darwin;;
@@ -888,8 +888,8 @@ AC_EXEEXT
 AC_OBJEXT
 
 dnl This is the os flavour, should be unix or win32
-case $host in
-   win32)
+case $OPSYS in
+   windows)
       ERLANG_OSTYPE=win32 ;;
    *)
       ERLANG_OSTYPE=unix ;;
@@ -918,7 +918,7 @@ AS_CASE([$host_os],
 	[
     		DEXPORT="-rdynamic " 
     	],
-	[win32],
+	[*-windows],
 	[
     		DEXPORT="" 
     	],
@@ -1215,7 +1215,7 @@ dnl ----------------------------------------------------------------------
 
 TERMCAP_LIB=
 
-AS_IF([test "x$with_termcap" != "xno" && test "X$host" != "Xwin32"],
+AS_IF([test "x$with_termcap" != "xno" && test "X$host_os" != "Xwindows"],
   [
     # try these libs
     termcap_libs="tinfo ncurses curses termcap termlib"
@@ -1240,7 +1240,7 @@ if test "x$TERMCAP_LIB" != "x"; then
 	AC_DEFINE(HAVE_TERMCAP, 1, [Define if termcap functions exists])
 fi
 
-AS_IF([test "X$host" != "Xwin32"],
+AS_IF([test "X$host_os" != "Xwindows"],
   [
     AC_MSG_CHECKING(for wcwidth)
     AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <wchar.h>]], [[wcwidth(0);]])],[have_wcwidth=yes],[have_wcwidth=no])
@@ -2050,7 +2050,7 @@ AS_CASE([$host_os],
 			AC_DEFINE([HAVE_SENDFILEV],[1],
 		           [Define to 1 if you have the `sendfilev' function.]))
         ],
-	[win32],
+	[windows],
 	[
 		LIBS="$LIBS -lmswsock"
 	])
@@ -2886,7 +2886,7 @@ AS_IF([test ${enable_jit} != no],
            ;;
         arm64)
            case "$OPSYS" in
-              win32|darwin)
+              windows|darwin)
                 # These platforms have dedicated system calls for clearing
                 # instruction cache, and don't require us to manually issue
                 # instruction barriers on all threads.

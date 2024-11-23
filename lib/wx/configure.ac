@@ -215,7 +215,7 @@ case $host_os in
 	EXTRA_LDFLAGS=" -bundle_loader ${ERL_TOP}/bin/$host/beam.smp"
 	GL_LIBS="-framework OpenGL"
 	;;
-    win32)
+    windows)
         LDFLAGS="-dll $LDFLAGS"
 	GL_LIBS="-lglu32 -lOpengl32"
 	;;
@@ -241,7 +241,7 @@ case $host_os in
 	DEBUG_CFLAGS="-g -Wall -DDEBUG $CFLAGS"
 	CFLAGS="-g -Wall -O2 $CFLAGS -fomit-frame-pointer -fno-strict-aliasing"
 	;;
-    win32)
+    windows)
 	DEBUG_CFLAGS="-g -Wall $CFLAGS -DDEBUG"
 	CFLAGS="-g -Wall -O2 $CFLAGS"
 	;;
@@ -730,7 +730,7 @@ AS_IF([test "x$GCC" = xyes],
 dnl 
 
 case $host_os in
-    mingw32|win32)
+    mingw32|windows)
 	RUN_ERL=werl
 	SO_EXT=.dll;;
     *)

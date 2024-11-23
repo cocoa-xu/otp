@@ -35,55 +35,67 @@ AC_DEFUN([ERL_CANONICAL_SYSTEM_TYPE],
     AC_CANONICAL_HOST
     # Adjust for local legacy windows hack...
     AS_CASE([$host],
-            [local-aarch64-*-windows],
+            [aarch64-pc-windows],
             [
-                host=win32
-                host_os=win32
-                host_vendor=
+                host_os=windows
+                host_vendor=pc
                 host_cpu=aarch64
             ],
-            [local-*-windows],
+            [x86_64-pc-windows],
             [
-                host=win32
-                host_os=win32
-                host_vendor=
-                host_cpu=
+                host_os=windows
+                host_vendor=pc
+                host_cpu=x86_64
+            ],
+            [i686-pc-windows],
+            [
+                host_os=windows
+                host_vendor=pc
+                host_cpu=i686
             ])
 
     AC_CANONICAL_BUILD
     # Adjust for local legacy windows hack...
     AS_CASE([$build],
-            [local-aarch64-*-windows],
+            [aarch64-pc-windows],
             [
-                build=win32
-                build_os=win32
-                build_vendor=
+                build_os=windows
+                build_vendor=pc
                 build_cpu=aarch64
             ],
-            [local-*-windows],
+            [x86_64-pc-windows],
             [
-                build=win32
-                build_os=win32
-                build_vendor=
-                build_cpu=
+                build_os=windows
+                build_vendor=pc
+                build_cpu=x86_64
+            ],
+            [i686-pc-windows],
+            [
+                build_os=windows
+                build_vendor=pc
+                build_cpu=i686
             ])
 
     AC_CANONICAL_TARGET
     # Adjust for local legacy windows hack...
     AS_CASE([$target],
-            [local-aarch64-*-windows],
+            [aarch64-pc-windows],
             [
-                build=win32
-                build_os=win32
-                build_vendor=
-                build_cpu=aarch64
+                target_os=windows
+                target_vendor=pc
+                target_cpu=aarch64
             ],
-            [local-*-windows],
+            [x86_64-pc-windows],
             [
-                target=win32
-                target_os=win32
-                target_vendor=
-                target_cpu=
+                target_os=windows
+                target_vendor=pc
+                target_cpu=x86_64
+            ],
+            [i686-pc-windows],
+            [
+                target_os=windows
+                target_vendor=pc
+                target_cpu=i686
             ])
 
     AS_IF([test "$cross_compiling" = "yes" -a "$build" = "$host"  -a "$build_cpu" = "$host_cpu"],
@@ -216,7 +228,7 @@ dnl MIXED_MINGW is mingw(32|64) used as standard compiler
 MIXED_MINGW=no
 
 AC_MSG_CHECKING(for mixed mingw-gcc and native VC++ environment)
-if test "X$host" = "Xwin32" -a "x$GCC" != "xyes"; then
+if test "X$host_os" = "Xwindows" -a "x$GCC" != "xyes"; then
 	if test -x /usr/bin/msys-?.0.dll; then
 	        CFLAGS="$CFLAGS -O2"
 		MIXED_MSYS=yes
@@ -247,7 +259,7 @@ AC_SUBST(MIXED_VC)
 
 if test "x$MIXED_MSYS" != "xyes"; then
    AC_MSG_CHECKING(for mixed cygwin and native MinGW environment)
-   if test "X$host" = "Xwin32" -a "x$GCC" = x"yes"; then
+   if test "X$host_os" = "Xwindows" -a "x$GCC" = x"yes"; then
 	if test -x /usr/bin/cygpath; then
 		CFLAGS="$CFLAGS -O2"
 		AC_MSG_RESULT([yes])
@@ -893,7 +905,7 @@ $trust_test
   
   erl_corrected_monotonic_clock=no
   case $erl_cv_clock_gettime_monotonic_$1-$ac_cv_func_gethrtime-$erl_cv_mach_clock_get_time_monotonic-$host_os in
-    *-*-*-win32)
+    *-*-*-windows)
       erl_monotonic_clock_func=WindowsAPI
       ;;
     CLOCK_*-*-*-linux*)
@@ -1036,7 +1048,7 @@ $trust_test
   erl_wall_clock_low_resolution=no
   erl_wall_clock_id=
   case $1-$erl_cv_clock_gettime_wall_$1-$erl_cv_mach_clock_get_time_wall-$ac_cv_func_gettimeofday-$host_os in
-    *-*-*-*-win32)
+    *-*-*-*-windows)
       erl_wall_clock_func=WindowsAPI
       erl_wall_clock_low_resolution=yes
       ;;
@@ -1082,7 +1094,7 @@ NEED_NPTL_PTHREAD_H=no
 dnl win32?
 AC_MSG_CHECKING([for native win32 threads])
 AS_IF(
-  [test "X$host_os" = "Xwin32"],
+  [test "X$host_os" = "Xwindows"],
   [
     AC_MSG_RESULT(yes)
     THR_DEFS="-DWIN32_THREADS"
@@ -3103,7 +3115,7 @@ DED_OSTYPE=unix
 case $host_os in
      linux*)
 	DED_CFLAGS="-D_GNU_SOURCE" ;;
-     win32)
+     windows)
 	DED_CFLAGS="-D_WIN32_WINNT=0x0600 -DWINVER=0x0600"
         DED_OSTYPE=win32 ;;
      *)
@@ -3149,7 +3161,7 @@ AS_IF(
 
 DED_EXT=so
 case $host_os in
-    win32) DED_EXT=dll;;
+    windows) DED_EXT=dll;;
     darwin*)
 	DED_CFLAGS="$DED_CFLAGS -fno-common"
 	DED_STATIC_CFLAGS="$DED_STATIC_CFLAGS -fno-common";;
@@ -3166,7 +3178,7 @@ if test "$CFLAG_RUNTIME_LIBRARY_PATH" = ""; then
     darwin*)
 	CFLAG_RUNTIME_LIBRARY_PATH=
 	;;
-    win32)
+    windows)
 	CFLAG_RUNTIME_LIBRARY_PATH=
 	;;
     osf*)
@@ -3186,7 +3198,7 @@ DED_LDFLAGS_CONFTEST=
 
 DED_LD_FLAG_RUNTIME_LIBRARY_PATH="-R"
 case $host_os in
-	win32)
+	windows)
 		DED_LD="ld.sh"
 		DED_LDFLAGS="-dll"
 		DED_LD_FLAG_RUNTIME_LIBRARY_PATH=

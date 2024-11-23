@@ -42,7 +42,7 @@ RELSYSDIR = $(RELEASE_PATH)/lib/os_mon-$(VSN)
 # ----------------------------------------------------
 # Target Specs
 # ----------------------------------------------------
-ifeq ($(findstring win32,$(TARGET)),win32)
+ifeq ($(findstring windows,$(OPSYS)),windows)
 PROGRAMS = \
 	win32sysinfo.exe \
 	nteventlog.exe

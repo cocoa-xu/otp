@@ -79,7 +79,7 @@ local_setup:
 		$(ERL_TOP)/bin/typer $(ERL_TOP)/bin/typer.exe \
 		$(ERL_TOP)/bin/ct_run $(ERL_TOP)/bin/ct_run.exe \
 		$(ERL_TOP)/bin/start*.boot $(ERL_TOP)/bin/start*.script
-	@if [ "X$(TARGET)" = "Xwin32" ]; then \
+	@if [ "$(TARGET)" ~= "-windows" ]; then \
 		cp $(ERL_TOP)/bin/$(TARGET)/dialyzer.exe $(ERL_TOP)/bin/dialyzer.exe; \
 		cp $(ERL_TOP)/bin/$(TARGET)/typer.exe $(ERL_TOP)/bin/typer.exe; \
 		cp $(ERL_TOP)/bin/$(TARGET)/ct_run.exe $(ERL_TOP)/bin/ct_run.exe; \

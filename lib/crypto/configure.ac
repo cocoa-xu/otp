@@ -283,7 +283,7 @@ yes
               dynamic_lib_dir=
               dynamic_runtime_lib_dir=
           ],
-          [test "$host_os" = "win32"],
+          [test "$host_os" = "windows"],
           [
               # Windows...
               AS_IF([test "x$ac_cv_sizeof_void_p" = "x8"],
@@ -448,7 +448,7 @@ case "$with_ssl_zlib" in
 esac
 
 if test $enable_dynamic_ssl = undefined; then
-   if test "$host_os" = "win32" ; then
+   if test "$host_os" = "windows" ; then
       enable_dynamic_ssl=default_no
    else
       enable_dynamic_ssl=default_yes
@@ -482,7 +482,7 @@ AS_CASE(["$erl_xcomp_without_sysroot-$with_ssl"],
             CRYPTO_APP=crypto
             SSH_APP=ssh
 
-            AS_IF([test "$host_os" != "win32"],
+            AS_IF([test "$host_os" != "windows"],
                   [
                       std_win_ssl_locations=
                   ],
@@ -892,7 +892,7 @@ AS_IF([test $SSL_DYNAMIC_ONLY = yes],
       ],
       [
           LDFLAGS="$DED_LDFLAGS_CONFTEST"
-          AS_IF([test "$host_os" = "win32"],
+          AS_IF([test "$host_os" = "windows"],
                 [LIBS="$LIBS $SSL_LIBDIR/$SSL_CRYPTO_LIBNAME.lib $SSL_EXTRA_LIBS"],
                 [LIBS="$LIBS $SSL_LIBDIR/lib$SSL_CRYPTO_LIBNAME.a $SSL_EXTRA_LIBS"])
       ])

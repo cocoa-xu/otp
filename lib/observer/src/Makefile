@@ -96,7 +96,7 @@ TARGET_FILES= $(MODULES:%=$(EBIN)/%.$(EMULATOR)) $(APP_TARGET) $(APPUP_TARGET)
 PRIVDIR= ../priv
 PNGFILES= $(PRIVDIR)/erlang_observer.png
 BINDIR= $(PRIVDIR)/bin
-ifeq ($(findstring win32,$(TARGET)),win32)
+ifeq ($(findstring windows,$(OPSYS)),windows)
 WIN32_EXECUTABLES= $(BINDIR)/etop.bat $(BINDIR)/cdv.bat
 else
 WIN32_EXECUTABLES=

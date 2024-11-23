@@ -129,7 +129,7 @@ TYPEMARKER = .debug
 TYPE_FLAGS = @DEBUG_CFLAGS@ -DDEBUG
 TYPE_CXXFLAGS = @DEBUG_CXXFLAGS@
 ENABLE_ALLOC_TYPE_VARS += debug
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 TYPE_FLAGS += -DNO_JUMP_TABLE
 LDFLAGS += -g
 endif
@@ -271,7 +271,7 @@ ERTS_BUILD_FALLBACK_POLL=@ERTS_BUILD_FALLBACK_POLL@
 #
 SHELL   = /bin/sh
 CC      = @CC@
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 ifeq ($(TYPE),debug)
 EMU_CC  = @CC@
 else
@@ -298,7 +298,7 @@ MKDIR	= @MKDIR@
 
 USING_MINGW=@MIXED_MINGW@
 
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 LIB_PREFIX=
 LIB_SUFFIX=.lib
 EXE_SUFFIX=.exe
@@ -332,7 +332,7 @@ endif
 endif
 UNROLL_FLG = -funroll-loops
 else
-ifeq ($(TARGET), win32)
+ifeq ($(OPSYS), windows)
 GEN_OPT_FLGS = $(OPT_LEVEL)
 UNROLL_FLG = 
 RC=rc.sh
@@ -366,7 +366,7 @@ LIBS += $(Z_LIB)
 DEPLIBS =
 else
 DEPLIBS=$(ZLIB_LIBRARY)
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 LIBS    += -L$(ZLIB_OBJDIR) -lz
 else
 # Build on darwin fails if -lz is used
@@ -374,7 +374,7 @@ LIBS += $(ZLIB_LIBRARY)
 endif
 endif
 
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 LIBS    += -L$(ERL_TOP)/erts/emulator/pcre/obj/$(TARGET)/$(TYPE) -lepcre
 else
 LIBS    += $(ERL_TOP)/erts/emulator/pcre/obj/$(TARGET)/$(TYPE)/$(LIB_PREFIX)epcre$(LIB_SUFFIX)
@@ -384,7 +384,7 @@ EPCRE_LIB = $(ERL_TOP)/erts/emulator/pcre/obj/$(TARGET)/$(TYPE)/$(LIB_PREFIX)epc
 DEPLIBS += $(EPCRE_LIB)
 
 DEPLIBS += $(RYU_LIBRARY)
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 LIBS += -L$(RYU_OBJDIR) -lryu
 else
 # Build on darwin fails if -lryu is used
@@ -392,7 +392,7 @@ LIBS += $(RYU_LIBRARY)
 endif
 
 DEPLIBS += $(OPENSSL_LIB)
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 LIBS += -L$(OPENSSL_OBJDIR) -l$(OPENSSL_LIB_NAME)
 else
 # Build on darwin fails if -l$(OPENSSL_LIB_NAME) is used
@@ -456,7 +456,7 @@ ERLANG_OSTYPE = @ERLANG_OSTYPE@
 
 ENABLE_ALLOC_TYPE_VARS += @ERLANG_OSTYPE@
 
-ifeq ($(TARGET), win32)
+ifeq ($(OPSYS), windows)
 FLAVOR_EXECUTABLE = beam$(TF_MARKER).dll
 EMULATOR_LIB = libbeam.lib
 else
@@ -476,7 +476,7 @@ PROFILE_LDFLAGS = -fprofile-instr-generate
 endif
 endif
 
-ifeq ($(TARGET), win32)
+ifeq ($(OPSYS), windows)
 PRIMARY_EXECUTABLE=beam$(TYPEMARKER).smp.dll
 else
 PRIMARY_EXECUTABLE=beam$(TYPEMARKER).smp
@@ -505,7 +505,7 @@ endif
 
 $(BINDIR)/$(PRIMARY_EXECUTABLE): $(BINDIR)/$(FLAVOR_EXECUTABLE)
 	$(INSTALL_PROGRAM) $< $@
-ifeq ($(TARGET), win32)
+ifeq ($(OSSYS), windows)
 	$(INSTALL_PROGRAM) $(basename $<).pdb $(basename $@).pdb
 endif
 
@@ -539,7 +539,7 @@ include $(ERL_TOP)/make/otp_release_targets.mk
 RELSYSDIR = $(RELEASE_PATH)/erts-$(VSN)
 
 RELEASE_INCLUDES = beam/erl_driver.h sys/$(ERLANG_OSTYPE)/driver_int.h beam/erl_nif.h beam/erl_nif_api_funcs.h beam/erl_drv_nif.h
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 RELEASE_INCLUDES += sys/$(ERLANG_OSTYPE)/erl_win_dyn_driver.h
 endif
 
@@ -581,7 +581,7 @@ endif
 
 
 # has to be run after _create_dirs
-ifeq ($(TARGET), win32)
+ifeq ($(OPSYS), windows)
 TMPVAR := $(shell LANG=C $(PERL) utils/make_compiler_flags -o $(TTF_DIR)/erl_compile_flags.h -v CONFIG_H "N/A" -v CFLAGS "$(CFLAGS)" -v LDFLAGS "$(LDFLAGS)")
 else
 # We force this to be run every time this makefile is executed
@@ -772,7 +772,7 @@ PRELOAD_BEAM =	$(ERL_TOP)/erts/preloaded/ebin/erts_code_purger.beam \
 		$(ERL_TOP)/erts/preloaded/ebin/counters.beam \
 		$(ERL_TOP)/erts/preloaded/ebin/persistent_term.beam
 
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 # On windows the preloaded objects are in a resource object.
 PRELOAD_OBJ = $(OBJDIR)/beams.$(RES_EXT)
 PRELOAD_SRC = $(TTF_DIR)/beams.rc
@@ -824,7 +824,7 @@ endif
 
 INCLUDES  =  -I$(TTF_DIR) $(COMMON_INCLUDES)
 
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 $(OBJDIR)/dll_sys.o: sys/$(ERLANG_OSTYPE)/sys.c
 	$(V_CC) $(CFLAGS) -DERL_RUN_SHARED_LIB=1 $(INCLUDES) -c $< -o $@
 
@@ -1156,7 +1156,7 @@ NIF_OBJS = \
 	$(OBJDIR)/zlib_nif.o \
 	$(ESOCK_NIF_OBJS)
 
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 DRV_OBJS = \
 	$(OBJDIR)/registry_drv.o \
 	$(OBJDIR)/inet_drv.o \
@@ -1257,7 +1257,7 @@ $(OBJS): $(TTF_DIR)/GENERATED
 # The emulator itself
 #
 
-ifeq ($(TARGET), win32)
+ifeq ($(OPSYS), windows)
 # Only the basic erlang to begin with eh?
 $(BINDIR)/$(FLAVOR_EXECUTABLE): $(INIT_OBJS) $(OBJS) $(DEPLIBS)
 	$(ld_verbose) $(LD) -dll -def:sys/$(ERLANG_OSTYPE)/erl.def \
@@ -1316,7 +1316,7 @@ SED_REPL_POLL=s|$$(OBJDIR)/erl_poll.o|$$(OBJDIR)/erl_poll.o $$(OBJDIR)/erl_poll.
 SED_REPL_TTF_COMP_FLAGS=s|\([^/]\)erl_compile_flags\.h|\1$$(TTF_DIR)/erl_compile_flags\.h|g
 SED_ASMJIT_HPP_FLAGS=s|\([^/]\)asmjit/asmjit\.hpp|\1$$(TTF_DIR)/asmjit/asmjit\.hpp|g
 
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 #SED_PREFIX=$(SED_REPL_WIN_DRIVE);
 SED_PREFIX=
 else
@@ -1340,7 +1340,7 @@ BEAM_CPP_SRC=$(wildcard beam/*.cpp) $(wildcard beam/jit/*.cpp) $(wildcard beam/j
 endif
 DRV_COMMON_SRC=$(wildcard drivers/common/*.c)
 DRV_OSTYPE_SRC=$(wildcard drivers/$(ERLANG_OSTYPE)/*.c)
-ifeq ($(TARGET), win32)
+ifeq ($(OPSYS), windows)
 # These are *currently* only needed for non-win32,
 # since the nif-functions for socket and net are basically
 # stubbed with badarg in the win32 case.
@@ -1357,7 +1357,7 @@ TARGET_SRC=$(shell find $(TARGET) $(TTF_DIR) -maxdepth 1 -name "*.c")
 # I do not want the -MG flag on windows, it does not work properly for a 
 # windows build.
 
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 
 #DEP_CC=$(EMU_CC)
 DEP_CC=$(CC)

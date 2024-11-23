@@ -3486,19 +3486,23 @@ test -n "$target_alias" &&
 
     # Adjust for local legacy windows hack...
     case $host in #(
-  local-aarch64-*-windows) :
+  aarch64-pc-windows) :
 
-                host=win32
-                host_os=win32
-                host_vendor=
+                host_os=windows
+                host_vendor=pc
                 host_cpu=aarch64
              ;; #(
-  local-*-windows) :
+  x86_64-pc-windows) :
 
-                host=win32
-                host_os=win32
-                host_vendor=
-                host_cpu=
+                host_os=windows
+                host_vendor=pc
+                host_cpu=x86_64
+             ;; #(
+  i686-pc-windows) :
+
+                host_os=windows
+                host_vendor=pc
+                host_cpu=i686
              ;; #(
   *) :
      ;;
@@ -3507,19 +3511,23 @@ esac
 
     # Adjust for local legacy windows hack...
     case $build in #(
-  local-aarch64-*-windows) :
+  aarch64-pc-windows) :
 
-                build=win32
-                build_os=win32
-                build_vendor=
+                build_os=windows
+                build_vendor=pc
                 build_cpu=aarch64
              ;; #(
-  local-*-windows) :
+  x86_64-pc-windows) :
 
-                build=win32
-                build_os=win32
-                build_vendor=
-                build_cpu=
+                build_os=windows
+                build_vendor=pc
+                build_cpu=x86_64
+             ;; #(
+  i686-pc-windows) :
+
+                build_os=windows
+                build_vendor=pc
+                build_cpu=i686
              ;; #(
   *) :
      ;;
@@ -3528,19 +3536,23 @@ esac
 
     # Adjust for local legacy windows hack...
     case $target in #(
-  local-aarch64-*-windows) :
+  aarch64-pc-windows) :
 
-                build=win32
-                build_os=win32
-                build_vendor=
-                build_cpu=aarch64
+                target_os=windows
+                target_vendor=pc
+                target_cpu=aarch64
              ;; #(
-  local-*-windows) :
+  x86_64-pc-windows) :
 
-                target=win32
-                target_os=win32
-                target_vendor=
-                target_cpu=
+                target_os=windows
+                target_vendor=pc
+                target_cpu=x86_64
+             ;; #(
+  i686-pc-windows) :
+
+                target_os=windows
+                target_vendor=pc
+                target_cpu=i686
              ;; #(
   *) :
      ;;
@@ -5129,7 +5141,7 @@ MIXED_MINGW=no
 
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for mixed mingw-gcc and native VC++ environment" >&5
 printf %s "checking for mixed mingw-gcc and native VC++ environment... " >&6; }
-if test "X$host" = "Xwin32" -a "x$GCC" != "xyes"; then
+if test "X$host_os" = "Xwindows" -a "x$GCC" != "xyes"; then
 	if test -x /usr/bin/msys-?.0.dll; then
 	        CFLAGS="$CFLAGS -O2"
 		MIXED_MSYS=yes
@@ -5166,7 +5178,7 @@ fi
 if test "x$MIXED_MSYS" != "xyes"; then
    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for mixed cygwin and native MinGW environment" >&5
 printf %s "checking for mixed cygwin and native MinGW environment... " >&6; }
-   if test "X$host" = "Xwin32" -a "x$GCC" = x"yes"; then
+   if test "X$host_os" = "Xwindows" -a "x$GCC" = x"yes"; then
 	if test -x /usr/bin/cygpath; then
 		CFLAGS="$CFLAGS -O2"
 		{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
@@ -6107,7 +6119,7 @@ NEED_NPTL_PTHREAD_H=no
 
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for native win32 threads" >&5
 printf %s "checking for native win32 threads... " >&6; }
-if test "X$host_os" = "Xwin32"
+if test "X$host_os" = "Xwindows"
 then :
 
     { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
@@ -6664,7 +6676,7 @@ DED_OSTYPE=unix
 case $host_os in
      linux*)
 	DED_CFLAGS="-D_GNU_SOURCE" ;;
-     win32)
+     windows)
 	DED_CFLAGS="-D_WIN32_WINNT=0x0600 -DWINVER=0x0600"
         DED_OSTYPE=win32 ;;
      *)
@@ -6945,7 +6957,7 @@ fi
 
 DED_EXT=so
 case $host_os in
-    win32) DED_EXT=dll;;
+    windows) DED_EXT=dll;;
     darwin*)
 	DED_CFLAGS="$DED_CFLAGS -fno-common"
 	DED_STATIC_CFLAGS="$DED_STATIC_CFLAGS -fno-common";;
@@ -6962,7 +6974,7 @@ if test "$CFLAG_RUNTIME_LIBRARY_PATH" = ""; then
     darwin*)
 	CFLAG_RUNTIME_LIBRARY_PATH=
 	;;
-    win32)
+    windows)
 	CFLAG_RUNTIME_LIBRARY_PATH=
 	;;
     osf*)
@@ -6982,7 +6994,7 @@ DED_LDFLAGS_CONFTEST=
 
 DED_LD_FLAG_RUNTIME_LIBRARY_PATH="-R"
 case $host_os in
-	win32)
+	windows)
 		DED_LD="ld.sh"
 		DED_LDFLAGS="-dll"
 		DED_LD_FLAG_RUNTIME_LIBRARY_PATH=

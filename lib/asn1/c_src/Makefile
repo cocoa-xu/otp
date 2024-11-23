@@ -63,7 +63,7 @@ NIF_STATIC_OBJ_FILES = $(OBJDIR)/asn1_erl_nif_static.o
 
 # Module and shared lib have to have same name of
 # static nifs to work
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 NIF_SHARED_OBJ_FILE = $(LIBDIR)/asn1rt_nif.dll
 NIF_LIB_FILE = $(LIBDIR)/asn1rt_nif.lib
 CLIB_FLAGS =

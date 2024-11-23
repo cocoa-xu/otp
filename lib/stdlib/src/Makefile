@@ -161,7 +161,7 @@ APPUP_FILE= stdlib.appup
 APPUP_SRC= $(APPUP_FILE).src
 APPUP_TARGET= $(EBIN)/$(APPUP_FILE)
 
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
   EXE_SUFFIX=.exe
 else
   EXE_SUFFIX=

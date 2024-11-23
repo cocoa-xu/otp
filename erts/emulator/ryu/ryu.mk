@@ -30,19 +30,19 @@ RYU_DIR =  $(ERL_TOP)/erts/emulator/ryu
 
 RYU_SRC = $(RYU_FILES:%=ryu/%.c)
 
-ifeq ($(TARGET), win32)
+ifeq ($(OPSYS), windows)
 RYU_LIBRARY = $(RYU_OBJDIR)/ryu.lib
 else
 RYU_LIBRARY = $(RYU_OBJDIR)/libryu.a
 endif
 
-ifeq ($(TARGET), win32)
+ifeq ($(OPSYS), windows)
 RYU_CFLAGS = $(CFLAGS)
 else
 RYU_CFLAGS = $(filter-out -Wdeclaration-after-statement,$(CFLAGS))
 endif
 
-ifeq ($(TARGET), win32)
+ifeq ($(OPSYS), windows)
 $(RYU_LIBRARY): $(RYU_OBJS)
 	$(V_AR) -out:$@ $(RYU_OBJS)
 else

@@ -41,7 +41,7 @@ ERTS_INCL = -I$(ERL_TOP)/erts/include \
             -I$(ERL_TOP)/erts/include/internal/$(TARGET)
 
 # On windows we always need reentrant libraries.
-ifeq ($(TARGET),win32)
+ifeq ($(OPSYS),windows)
 ERTS_INTERNAL_LIBS=-L../../lib/internal/$(TARGET) -lerts_internal_r$(ERTS_LIB_TYPEMARKER) @ERTS_INTERNAL_X_LIBS@
 else
 ERTS_INTERNAL_LIBS=-L../../lib/internal/$(TARGET) -lerts_internal$(ERTS_LIB_TYPEMARKER) @ERTS_INTERNAL_X_LIBS@ -lm
@@ -63,7 +63,7 @@ LDFLAGS = @LDFLAGS@
 # ----------------------------------------------------
 
 # The targets
-ifeq ($(findstring win32,$(TARGET)),win32)
+ifeq ($(findstring windows,$(OPSYS)),windows)
 EPMD = epmd.exe
 else
 EPMD = epmd

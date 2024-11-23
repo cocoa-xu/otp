@@ -11,7 +11,7 @@
 # loading this file, other *unset* `ac_cv_foo' will be assigned the
 # following values.
 
-# ac_cv_build=${ac_cv_build=local-x86-pc-windows}
+# ac_cv_build=${ac_cv_build=i686-pc-windows}
 ac_cv_c_bigendian=${ac_cv_c_bigendian=no}
 ac_cv_c_compiler_gnu=${ac_cv_c_compiler_gnu=no}
 ac_cv_c_const=${ac_cv_c_const=yes}
@@ -73,7 +73,7 @@ ac_cv_env_CXX_value=cc.sh
 # ac_cv_env_YFLAGS_set=
 # ac_cv_env_YFLAGS_value=
 ac_cv_env_build_alias_set=set
-ac_cv_env_build_alias_value=local-x86-pc-windows
+ac_cv_env_build_alias_value=i686-pc-windows
 # ac_cv_env_erl_xcomp_after_morecore_hook_set=
 # ac_cv_env_erl_xcomp_after_morecore_hook_value=
 # ac_cv_env_erl_xcomp_bigendian_set=
@@ -107,9 +107,9 @@ ac_cv_env_build_alias_value=local-x86-pc-windows
 # ac_cv_env_erl_xcomp_sysroot_set=
 # ac_cv_env_erl_xcomp_sysroot_value=
 ac_cv_env_host_alias_set=set
-ac_cv_env_host_alias_value=local-x86-pc-windows
+ac_cv_env_host_alias_value=i686-pc-windows
 ac_cv_env_target_alias_set=set
-ac_cv_env_target_alias_value=local-x86-pc-windows
+ac_cv_env_target_alias_value=i686-pc-windows
 ac_cv_exeext=${ac_cv_exeext=.exe}
 ac_cv_func___brk=${ac_cv_func___brk=no}
 ac_cv_func___sbrk=${ac_cv_func___sbrk=no}
@@ -249,7 +249,7 @@ ac_cv_header_valgrind_valgrind_h=${ac_cv_header_valgrind_valgrind_h=no}
 ac_cv_header_windows_h=${ac_cv_header_windows_h=yes}
 ac_cv_header_winsock2_h=${ac_cv_header_winsock2_h=yes}
 ac_cv_header_ws2tcpip_h=${ac_cv_header_ws2tcpip_h=yes}
-ac_cv_host=${ac_cv_host=local-x86-pc-windows}
+ac_cv_host=${ac_cv_host=i686-pc-windows}
 ac_cv_lib_dl_dlopen=${ac_cv_lib_dl_dlopen=no}
 ac_cv_lib_dl_dlvsym=${ac_cv_lib_dl_dlvsym=no}
 ac_cv_lib_dlpi_dlpi_open=${ac_cv_lib_dlpi_dlpi_open=no}
@@ -311,7 +311,7 @@ ac_cv_struct_sockaddr_sa_len=${ac_cv_struct_sockaddr_sa_len=no}
 ac_cv_struct_tm=${ac_cv_struct_tm=time.h}
 # ac_cv_sys_ipv6_support=${ac_cv_sys_ipv6_support=yes}
 ac_cv_sys_multicast_support=${ac_cv_sys_multicast_support=no}
-ac_cv_target=${ac_cv_target=local-x86-pc-windows}
+ac_cv_target=${ac_cv_target=i686-pc-windows}
 ac_cv_type_off_t=${ac_cv_type_off_t=yes}
 ac_cv_type_pid_t=${ac_cv_type_pid_t=no}
 ac_cv_type_size_t=${ac_cv_type_size_t=yes}
